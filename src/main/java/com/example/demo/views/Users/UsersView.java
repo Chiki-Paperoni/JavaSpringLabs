@@ -5,11 +5,7 @@ import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.router.*;
-import domain.user.User;
-
-import org.springframework.web.bind.annotation.GetMapping;
-
-import java.awt.*;
+import domain.user.DUser;
 
 @Route(value = "users")
 @PageTitle("Users")
@@ -22,13 +18,13 @@ public class UsersView  extends Div  implements HasUrlParameter<String>{
     public void setParameter(BeforeEvent event,
                              @OptionalParameter String parameter) {
         if (parameter == null) {
-            for (User user:userDao.index()) {
-                add(new Paragraph(new Text( user.getName() + " " + user.getEmail() + " " + user.getPhone() + " " + user.getSurname() )));
+            for (DUser DUser :userDao.index()) {
+                add(new Paragraph(new Text( DUser.getName() + " " + DUser.getEmail() + " " + DUser.getPhone() + " " + DUser.getSurname() )));
             }
         } else {
-            User user = userDao.show(Integer.parseInt(parameter));
-            if (user != null) {
-                add(new Paragraph(new Text( user.getName() + " " + user.getEmail() + " " + user.getPhone() + " " + user.getSurname() )));
+            DUser DUser = userDao.show(Integer.parseInt(parameter));
+            if (DUser != null) {
+                add(new Paragraph(new Text( DUser.getName() + " " + DUser.getEmail() + " " + DUser.getPhone() + " " + DUser.getSurname() )));
             } else {
                 add(new Text("No such User"));
             }

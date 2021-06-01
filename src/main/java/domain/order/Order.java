@@ -1,7 +1,7 @@
 package domain.order;
 
 import domain.Servize;
-import domain.user.User;
+import domain.user.DUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -12,12 +12,12 @@ import java.util.List;
 public class Order {
 
     private Long id;
-    private User user;
+    private DUser DUser;
     private List<Servize> servize;
     private double total;
 
-    public Order(User user, List<Servize> servize) {
-        this.user = user;
+    public Order(DUser DUser, List<Servize> servize) {
+        this.DUser = DUser;
         this.servize = servize;
     }
 }

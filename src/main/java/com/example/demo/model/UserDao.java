@@ -1,14 +1,11 @@
 package com.example.demo.model;
 
-import com.vaadin.flow.component.html.Pre;
-import domain.user.Role;
-import domain.user.User;
+import domain.user.DUser;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class UserDao {
@@ -44,48 +41,46 @@ public class UserDao {
 //        users.add(new User(9,"User9","User9","@email1","380991938475","password",new ArrayList<Role>()));
 //    }
 
-    public List<User> index() {
-        List<User> users = new ArrayList<>();
+    public List<DUser> index() {
+        List<DUser> DUsers = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
             String SQL = "SELECT * FROM users";
             ResultSet result = statement.executeQuery(SQL);
             while(result.next()) {
-                User user = new User();
-                user.setId(result.getInt("id"));
-                user.setName(result.getString("fname"));
-                user.setSurname(result.getString("surname"));
-                user.setEmail(result.getString("email"));
-                user.setPhone(result.getString("phone"));
-                user.setPassword(result.getString("password"));
-                users.add(user);
+                DUser DUser = new DUser();
+                DUser.setId(result.getInt("id"));
+                DUser.setName(result.getString("fname"));
+                DUser.setSurname(result.getString("surname"));
+                DUser.setEmail(result.getString("email"));
+                DUser.setPhone(result.getString("phone"));
+                DUser.setPassword(result.getString("password"));
+                DUsers.add(DUser);
 
             }
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return users;
+        return DUsers;
     }
-    public void save(User user) {
+    public void save(DUser DUser) {
         try {
             PreparedStatement prepare =
                     connection.prepareStatement("INSERT INTO users VALUES(100,?,?,?,?,?,?)");
-            prepare.setString(1,user.getName());
-            prepare.setString(2,user.getSurname());
-            prepare.setString(3,user.getEmail());
-            prepare.setString(4,user.getPhone());
-            prepare.setString(5,user.getPassword());
-            prepare.setString(6,user.getRoles());
-
-
+            prepare.setString(1, DUser.getName());
+            prepare.setString(2, DUser.getSurname());
+            prepare.setString(3, DUser.getEmail());
+            prepare.setString(4, DUser.getPhone());
+            prepare.setString(5, DUser.getPassword());
+            prepare.setString(6, DUser.getRoles());
             prepare.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
-    public User show(int id) {
-        User user = null;
+    public DUser show(int id) {
+        DUser DUser = null;
         try {
             PreparedStatement prepare = connection.prepareStatement("SELECT * FROM users WHERE id=?");
             prepare.setInt(1,id);
@@ -93,15 +88,15 @@ public class UserDao {
             ResultSet result = prepare.executeQuery();
 //            if (result.getFetchSize() != 0) {
                 result.next();
-                user = new User();
-                user.setId(result.getInt("id"));
-                user.setName(result.getString("fname"));
-                user.setSurname(result.getString("surname"));
-                user.setEmail(result.getString("email"));
-                user.setPhone(result.getString("phone"));
-                user.setPassword(result.getString("password"));
-                user.setRoles(result.getString("roles"));
-                return user;
+                DUser = new DUser();
+                DUser.setId(result.getInt("id"));
+                DUser.setName(result.getString("fname"));
+                DUser.setSurname(result.getString("surname"));
+                DUser.setEmail(result.getString("email"));
+                DUser.setPhone(result.getString("phone"));
+                DUser.setPassword(result.getString("password"));
+                DUser.setRoles(result.getString("roles"));
+                return DUser;
 //            }
 
         } catch (SQLException throwables) {
@@ -110,7 +105,7 @@ public class UserDao {
         return null;
 //        return users.stream().filter(user -> user.getId() == id).findAny().orElse(null);
     }
-    public void update(int id, User updated) {
+    public int update(int id, DUser updated) {
         try {
             PreparedStatement prepare = connection.prepareStatement("UPDATE users SET fname=?, surname=?, email=?, phone=?, password=?, roles=? WHERE id=?");
             prepare.setString(1,updated.getName());
@@ -121,19 +116,23 @@ public class UserDao {
             prepare.setString(6,updated.getRoles());
             prepare.setInt(7,id);
             prepare.executeUpdate();
+            return id;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return -1;
     }
-    public void delete(int id) {
+    public int delete(int id) {
         PreparedStatement prepare = null;
 
         try {
             prepare = connection.prepareStatement("DELETE FROM users WHERE id=?");
             prepare.setInt(1,id);
             prepare.executeUpdate();
+            return id;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return -1;
     }
 }

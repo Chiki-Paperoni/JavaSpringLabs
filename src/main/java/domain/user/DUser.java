@@ -3,6 +3,7 @@ package domain.user;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -10,7 +11,8 @@ import java.util.Set;
 @Data
 //@AllArgsConstructor
 //@NoArgsConstructor
-public class User {
+@Component
+public class DUser {
 
     private int id;
     private String name;
@@ -20,7 +22,7 @@ public class User {
     private String password;
     private String roles;
 
-    public User() {
+    public DUser() {
 
     }
 
@@ -80,7 +82,7 @@ public class User {
         return roles;
     }
 
-    public User(int id, String name, String surname, String email, String phone, String password, String roles) {
+    public DUser(int id, String name, String surname, String email, String phone, String password, String roles) {
         this.id = id;
         this.name = name;
         this.surname = surname;
