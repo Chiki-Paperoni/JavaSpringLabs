@@ -18,7 +18,7 @@ import java.util.List;
 //import org.springframework.security.core.userdetails.User;
 
 
-@EnableWebSecurity
+//@EnableWebSecurity
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     UserService us = new UserService();
