@@ -1,6 +1,8 @@
 package com.example.demo.views.Users;
 
 import com.example.demo.model.UserService;
+import com.example.demo.repos.UserEntity;
+import com.example.demo.repos.UserRepo;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -20,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class SignUpView extends FormLayout implements BeforeEnterObserver {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepo userRepo;
 
     private Binder<DUser> binder = new Binder<>(DUser.class);
 
@@ -31,7 +35,7 @@ public class SignUpView extends FormLayout implements BeforeEnterObserver {
     private TextField password = new TextField("Choose password");
 
     private Button save = new Button("Confirm");
-    private Button delete = new Button("Delete");
+//    private Button delete = new Button("Delete");
 
     SignUpView() {
         HorizontalLayout buttons = new HorizontalLayout(save);
@@ -44,8 +48,14 @@ public class SignUpView extends FormLayout implements BeforeEnterObserver {
         binder.setBean(new DUser());
     }
     private void save() {
-        System.out.println(binder.getBean());
+        UserEntity u = new UserEntity();
+        u.setEmail(email.getValue());
+        u.setName(name.getValue());
+        u.setPassword(password.getValue());
+        u.setSurname(surname.getValue());
+        u.setPhone(phone.getValue());
         userService.save(binder.getBean());
+        userRepo.save(u);
     }
     @Override
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
