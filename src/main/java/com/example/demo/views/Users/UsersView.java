@@ -18,16 +18,16 @@ public class UsersView  extends Div  implements HasUrlParameter<String>{
     public void setParameter(BeforeEvent event,
                              @OptionalParameter String parameter) {
         if (parameter == null) {
-            for (DUser DUser :userDao.index()) {
-                add(new Paragraph(new Text( DUser.getName() + " " + DUser.getEmail() + " " + DUser.getPhone() + " " + DUser.getSurname() )));
-            }
+//            for (DUser DUser :userDao.index()) {
+//                add(new Paragraph(new Text( DUser.getName() + " " + DUser.getEmail() + " " + DUser.getPhone() + " " + DUser.getSurname() )));
+//            }
         } else {
-            DUser DUser = userDao.show(Integer.parseInt(parameter));
-            if (DUser != null) {
-                add(new Paragraph(new Text( DUser.getName() + " " + DUser.getEmail() + " " + DUser.getPhone() + " " + DUser.getSurname() )));
-            } else {
-                add(new Text("No such User"));
-            }
+//            DUser DUser = userDao.show(Integer.parseInt(parameter));
+//            if (DUser != null) {
+//                add(new Paragraph(new Text( DUser.getName() + " " + DUser.getEmail() + " " + DUser.getPhone() + " " + DUser.getSurname() )));
+//            } else {
+//                add(new Text("No such User"));
+//            }
         }
     }
 }
